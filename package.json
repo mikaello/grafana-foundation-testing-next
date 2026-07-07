@@ -8,7 +8,7 @@
     "format": "biome format --write *.ts *.md *.jsonc .github/* resources/*.json; prettier --write *.md .github/*.md",
     "lint": "biome lint --fix *.ts *.md *.jsonc .github/* resources/*.json",
     "assist": "biome check --fix *.ts *.md .github/* resources/*.json",
-    "validate": "grafanactl resources validate",
+    "validate": "gcx resources validate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

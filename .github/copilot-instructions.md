@@ -1,7 +1,7 @@
 # Copilot instructions
 
-- Use the Grafana Foundation SDK to build dashboards; prefer the v1beta1 schema for grafanactl resources.
-- Emit dashboards as Kubernetes-style manifests with `apiVersion: dashboard.grafana.app/v1beta1` and `kind: Dashboard`
+- Use the Grafana Foundation SDK to build dashboards and emit gcx resources.
+- Emit dashboards as Kubernetes-style manifests with `apiVersion: dashboard.grafana.app/v2` and `kind: Dashboard`
 - Keep generated JSON in `resources/` and source code in `index.ts`.
 - Avoid reformatting unrelated files.
 - After making changes, run the following commands to maintain code quality and ensure everything is working correctly:
