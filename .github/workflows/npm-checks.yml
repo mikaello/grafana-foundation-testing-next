@@ -7,6 +7,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  GCX_VERSION: 0.4.3
+  GRAFANA_NAMESPACE: stacks-1030830
+
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -19,11 +23,6 @@ jobs:
         with:
           node-version: "24"
           cache: "npm"
-
-      - name: Setup Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: "1.26.x"
 
       - name: Install dependencies
         run: npm ci
@@ -40,12 +39,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Install grafanactl
+      - name: Install gcx
         run: |
-          curl -fsSL "https://github.com/grafana/grafanactl/releases/latest/download/grafanactl_Linux_x86_64.tar.gz" -o /tmp/grafanactl.tgz
-          tar -xzf /tmp/grafanactl.tgz -C /tmp
-          install -m 0755 /tmp/grafanactl /usr/local/bin/grafanactl
-          grafanactl --version || true
+          curl -fsSL "https://github.com/grafana/gcx/releases/download/v${GCX_VERSION}/gcx_${GCX_VERSION}_linux_amd64.tar.gz" -o "/tmp/gcx_${GCX_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL "https://github.com/grafana/gcx/releases/download/v${GCX_VERSION}/gcx_${GCX_VERSION}_checksums.txt" -o "/tmp/gcx_${GCX_VERSION}_checksums.txt"
+          cd /tmp
+          grep "  gcx_${GCX_VERSION}_linux_amd64.tar.gz$" "gcx_${GCX_VERSION}_checksums.txt" | sha256sum -c -
+          tar -xzf "gcx_${GCX_VERSION}_linux_amd64.tar.gz" -C /tmp
+          install -m 0755 /tmp/gcx /usr/local/bin/gcx
+          gcx --version
 
       - name: Validate
         env:
@@ -66,26 +68,24 @@ jobs:
           node-version: "24"
           cache: "npm"
 
-      - name: Setup Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: "1.26.x"
-
       - name: Install dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
 
-      - name: Install grafanactl
+      - name: Install gcx
         run: |
-          curl -fsSL "https://github.com/grafana/grafanactl/releases/latest/download/grafanactl_Linux_x86_64.tar.gz" -o /tmp/grafanactl.tgz
-          tar -xzf /tmp/grafanactl.tgz -C /tmp
-          install -m 0755 /tmp/grafanactl /usr/local/bin/grafanactl
-          grafanactl --version || true
+          curl -fsSL "https://github.com/grafana/gcx/releases/download/v${GCX_VERSION}/gcx_${GCX_VERSION}_linux_amd64.tar.gz" -o "/tmp/gcx_${GCX_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL "https://github.com/grafana/gcx/releases/download/v${GCX_VERSION}/gcx_${GCX_VERSION}_checksums.txt" -o "/tmp/gcx_${GCX_VERSION}_checksums.txt"
+          cd /tmp
+          grep "  gcx_${GCX_VERSION}_linux_amd64.tar.gz$" "gcx_${GCX_VERSION}_checksums.txt" | sha256sum -c -
+          tar -xzf "gcx_${GCX_VERSION}_linux_amd64.tar.gz" -C /tmp
+          install -m 0755 /tmp/gcx /usr/local/bin/gcx
+          gcx --version
 
       - name: Push resources
         env:
           GRAFANA_SERVER: ${{ secrets.GRAFANA_SERVER }}
           GRAFANA_TOKEN: ${{ secrets.GRAFANA_TOKEN }}
-        run: grafanactl resources push
+        run: gcx resources push
