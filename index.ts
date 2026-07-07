@@ -1,30 +1,32 @@
-import {
-  AutoGridLayoutBuilder,
-  AutoGridLayoutItemBuilder,
+import * as dashboardV2Beta1 from "@grafana/grafana-foundation-sdk/dashboardv2beta1";
+import * as resource from "@grafana/grafana-foundation-sdk/resource";
+import * as testdata from "@grafana/grafana-foundation-sdk/testdata";
+import * as timeseries from "@grafana/grafana-foundation-sdk/timeseries";
+
+const {
+  AutoGridBuilder,
+  AutoGridItemBuilder,
   DashboardBuilder,
-  GridLayoutBuilder,
-  GridLayoutItemBuilder,
+  GridBuilder,
+  GridItemBuilder,
   PanelBuilder,
   QueryGroupBuilder,
-  RowsLayoutBuilder,
-  RowsLayoutRowBuilder,
-  TabsLayoutBuilder,
-  TabsLayoutTabBuilder,
+  RowBuilder,
+  RowsBuilder,
+  TabBuilder,
+  TabsBuilder,
   TargetBuilder,
-} from "@grafana/grafana-foundation-sdk/dashboardv2beta1";
-import {
-  DashboardKind,
-  ManifestBuilder,
-  MetadataBuilder,
-} from "@grafana/grafana-foundation-sdk/resource";
-import { QueryBuilder as TestDataQueryBuilder } from "@grafana/grafana-foundation-sdk/testdata";
-import { VisualizationBuilder as TimeSeriesVisualizationBuilder } from "@grafana/grafana-foundation-sdk/timeseries";
+} = dashboardV2Beta1;
+
+const { DashboardKind, ManifestBuilder, MetadataBuilder } = resource;
+const { QueryBuilder: TestDataQueryBuilder } = testdata;
+const { VisualizationBuilder: TimeSeriesVisualizationBuilder } = timeseries;
 
 const TESTDATA_DATASOURCE_NAME = "grafana-testdata-datasource";
 const DASHBOARD_API_VERSION = "dashboard.grafana.app/v2";
 const GRAFANA_NAMESPACE = process.env.GRAFANA_NAMESPACE ?? "stacks-1030830";
 
-function randomWalkPanel(panelId: number, seriesCount: number): PanelBuilder {
+function randomWalkPanel(panelId: number, seriesCount: number) {
   return new PanelBuilder()
     .id(panelId)
     .title(`New panel ${panelId}`)
@@ -51,45 +53,48 @@ const dashboard = new DashboardBuilder("[Example] Dashboard with tabs and rows")
   .element("panel-2", randomWalkPanel(2, 5))
   .element("panel-3", randomWalkPanel(3, 1))
   .element("panel-4", randomWalkPanel(4, 1))
-  .tabsLayout(
-    new TabsLayoutBuilder()
+  .layout(
+    new TabsBuilder()
       .tab(
-        new TabsLayoutTabBuilder("Tab without rows").gridLayout(
-          new GridLayoutBuilder().item(
-            new GridLayoutItemBuilder("panel-1").width(12).height(8),
+        new TabBuilder()
+          .title("Tab without rows")
+          .layout(
+            new GridBuilder().item(
+              new GridItemBuilder("panel-1").width(12).height(8),
+            ),
           ),
-        ),
       )
       .tab(
-        new TabsLayoutTabBuilder("Tab With Rows").rowsLayout(
-          new RowsLayoutBuilder()
+        new TabBuilder().title("Tab With Rows").layout(
+          new RowsBuilder()
             .row(
-              new RowsLayoutRowBuilder("Row without tabs")
+              new RowBuilder()
+                .title("Row without tabs")
                 .collapse(true)
-                .autoGridLayout(
-                  new AutoGridLayoutBuilder().item(
-                    new AutoGridLayoutItemBuilder("panel-2"),
+                .layout(
+                  new AutoGridBuilder().item(
+                    new AutoGridItemBuilder("panel-2"),
                   ),
                 ),
             )
             .row(
-              new RowsLayoutRowBuilder("Row with tabs")
+              new RowBuilder()
+                .title("Row with tabs")
                 .collapse(true)
-                .autoGridLayout(
-                  new AutoGridLayoutBuilder()
-                    .item(new AutoGridLayoutItemBuilder("panel-3"))
-                    .item(new AutoGridLayoutItemBuilder("panel-4")),
+                .layout(
+                  new AutoGridBuilder()
+                    .item(new AutoGridItemBuilder("panel-3"))
+                    .item(new AutoGridItemBuilder("panel-4")),
                 ),
             )
             .row(
-              new RowsLayoutRowBuilder("Empty row").autoGridLayout(
-                new AutoGridLayoutBuilder(),
-              ),
+              new RowBuilder().title("Empty row").layout(new AutoGridBuilder()),
             )
             .row(
-              new RowsLayoutRowBuilder("Hide header row")
+              new RowBuilder()
+                .title("Hide header row")
                 .hideHeader(true)
-                .autoGridLayout(new AutoGridLayoutBuilder()),
+                .layout(new AutoGridBuilder()),
             ),
         ),
       ),

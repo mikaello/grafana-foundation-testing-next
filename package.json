@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@grafana/grafana-foundation-sdk": "0.0.9"
+    "@grafana/grafana-foundation-sdk": "0.0.18"
   },
   "devDependencies": {
     "prettier": "3.9.4",
