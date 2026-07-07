@@ -1,0 +1,21 @@
+{
+  "name": "grafana-foundation-testing-next",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "mkdir -p resources && node index.ts > resources/output.json",
+    "format": "biome format --write *.ts *.md *.jsonc .github/* resources/*.json; prettier --write *.md .github/*.md",
+    "lint": "biome lint --fix *.ts *.md *.jsonc .github/* resources/*.json",
+    "assist": "biome check --fix *.ts *.md .github/* resources/*.json",
+    "validate": "grafanactl resources validate",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@grafana/grafana-foundation-sdk": "0.0.9"
+  },
+  "devDependencies": {
+    "prettier": "3.8.1",
+    "@biomejs/biome": "2.4.9"
+  }
+}
