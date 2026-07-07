@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 env:
+  # renovate: datasource=github-releases depName=grafana/gcx
   GCX_VERSION: 0.4.3
   GRAFANA_NAMESPACE: stacks-1030830
 
