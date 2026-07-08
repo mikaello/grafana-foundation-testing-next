@@ -14,7 +14,11 @@ The generator writes:
 - `alerting-resources/` for App Platform alert rules.
 - `alerting/` for contact points, notification policy, mute timing, notification template, and a classic alert rule group.
 
-Generated directories are ignored because `index.ts` is the source of truth.
+Generated directories are ignored because the TypeScript source files are the source of truth.
+
+`index.ts` lists every generated output file.
+`dashboards.ts`, `alerting.ts`, and `folders.ts` define the resource builders.
+`config.ts` and `resource-utils.ts` hold shared settings and helpers.
 
 ## Validate and dry-run
 
