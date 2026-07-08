@@ -43,11 +43,12 @@ Contact points and several notification objects are generated in the classic Gra
 ```sh
 GRAFANA_SERVER=https://example.grafana.net GRAFANA_TOKEN=... gcx alert contact-points create -f alerting/contact-point-webhook.json
 GRAFANA_SERVER=https://example.grafana.net GRAFANA_TOKEN=... gcx alert contact-points create -f alerting/contact-point-audit.json
+GRAFANA_SERVER=https://example.grafana.net GRAFANA_TOKEN=... gcx alert contact-points create -f alerting/contact-point-email.json
 ```
 
 Use `gcx alert ... --help` for update, export, policy, template, and mute timing commands.
 
-Set `GRAFANA_NAMESPACE`, `GRAFANA_FOLDER_UID`, `GRAFANA_DASHBOARD_FOLDER_UID`, `GRAFANA_TESTDATA_DATASOURCE_UID`, or `GRAFANA_ALERT_CONTACT_POINT` to target another stack or existing folder/contact point.
+Set `GRAFANA_NAMESPACE`, `GRAFANA_FOLDER_UID`, `GRAFANA_DASHBOARD_FOLDER_UID`, `GRAFANA_TESTDATA_DATASOURCE_UID`, `GRAFANA_ALERT_CONTACT_POINT`, `GRAFANA_EMAIL_CONTACT_POINT`, or `GRAFANA_EMAIL_CONTACT_POINT_ADDRESS` to target another stack or existing folder/contact point.
 
 References:
 

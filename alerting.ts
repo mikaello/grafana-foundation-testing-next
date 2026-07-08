@@ -1,6 +1,8 @@
 import * as alerting from "@grafana/grafana-foundation-sdk/alerting";
 import {
   ALERT_CONTACT_POINT,
+  EMAIL_CONTACT_POINT_ADDRESS,
+  EMAIL_CONTACT_POINT_NAME,
   FOLDER_UID,
   type JsonObject,
   TESTDATA_DATASOURCE_NAME,
@@ -86,6 +88,16 @@ export function alertingProvisioningResources() {
     })
     .build();
 
+  const emailContactPoint = new ContactPointBuilder()
+    .uid("gac-email")
+    .name(EMAIL_CONTACT_POINT_NAME)
+    .type("email")
+    .disableResolveMessage(false)
+    .settings({
+      addresses: EMAIL_CONTACT_POINT_ADDRESS,
+    })
+    .build();
+
   const notificationPolicy = new NotificationPolicyBuilder()
     .receiver(ALERT_CONTACT_POINT)
     .groupBy(["grafana_folder", "alertname", "severity"])
@@ -135,6 +147,7 @@ export function alertingProvisioningResources() {
   return {
     auditContactPoint,
     classicAlertRuleGroup: classicAlertRuleGroup(),
+    emailContactPoint,
     maintenanceWindow,
     notificationPolicy,
     template,
