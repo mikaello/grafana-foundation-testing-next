@@ -11,5 +11,10 @@ export const DASHBOARD_FOLDER_UID =
   process.env.GRAFANA_DASHBOARD_FOLDER_UID ?? "";
 export const ALERT_CONTACT_POINT =
   process.env.GRAFANA_ALERT_CONTACT_POINT ?? "grafana-as-code-webhook";
+export const EMAIL_CONTACT_POINT_NAME =
+  process.env.GRAFANA_EMAIL_CONTACT_POINT ?? "grafana-as-code-email";
+export const EMAIL_CONTACT_POINT_ADDRESS =
+  process.env.GRAFANA_EMAIL_CONTACT_POINT_ADDRESS ??
+  "kickers-prewar0x@icloud.com";
 
 export type JsonObject = Record<string, unknown>;

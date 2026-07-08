@@ -39,6 +39,10 @@ const alertingFiles = [
     resource: alertingResources.auditContactPoint,
   },
   {
+    path: "alerting/contact-point-email.json",
+    resource: alertingResources.emailContactPoint,
+  },
+  {
     path: "alerting/notification-policy.json",
     resource: alertingResources.notificationPolicy,
   },
