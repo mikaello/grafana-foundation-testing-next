@@ -9,7 +9,7 @@ on:
 
 env:
   # renovate: datasource=github-releases depName=grafana/gcx
-  GCX_VERSION: 0.4.3
+  GCX_VERSION: 0.5.0
   GRAFANA_NAMESPACE: stacks-1030830
 
 jobs:
