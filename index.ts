@@ -3,15 +3,19 @@ import {
   alertRuleResources,
 } from "./alerting.ts";
 import { explorationDashboard, operationsDashboard } from "./dashboards.ts";
-import { folderResource } from "./folders.ts";
+import { alertRuleFolderResource, dashboardFolderResource } from "./folders.ts";
 import { prepareGeneratedDirectories, writeJson } from "./resource-utils.ts";
 
 prepareGeneratedDirectories();
 
 const resources = [
   {
-    path: "resources/00-folder.json",
-    resource: folderResource(),
+    path: "resources/00-folder-dashboards.json",
+    resource: dashboardFolderResource(),
+  },
+  {
+    path: "resources/01-folder-alert-rules.json",
+    resource: alertRuleFolderResource(),
   },
   {
     path: "resources/10-dashboard-operations-overview.json",

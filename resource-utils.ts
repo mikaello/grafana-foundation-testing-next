@@ -4,6 +4,10 @@ import { GRAFANA_NAMESPACE } from "./config.ts";
 
 const { ManifestBuilder, MetadataBuilder } = resource;
 
+export const PROJECT_LABEL = "grafana-foundation-testing-next";
+export const PROJECT_LABEL_VALUE = "true";
+export const ALERT_PROJECT_LABEL = "grafana_foundation_testing_next";
+
 export function prepareGeneratedDirectories() {
   for (const directory of ["resources", "alerting-resources", "alerting"]) {
     rmSync(directory, { recursive: true, force: true });
@@ -48,9 +52,10 @@ function metadata(
     builder.annotations(annotations);
   }
 
-  if (Object.keys(labels).length > 0) {
-    builder.labels(labels);
-  }
+  builder.labels({
+    ...labels,
+    [PROJECT_LABEL]: PROJECT_LABEL_VALUE,
+  });
 
   return builder;
 }

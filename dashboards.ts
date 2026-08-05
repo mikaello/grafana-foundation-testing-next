@@ -332,11 +332,9 @@ export function explorationDashboard() {
 }
 
 function dashboardAnnotations() {
-  return DASHBOARD_FOLDER_UID === ""
-    ? {}
-    : {
-        "grafana.app/folder": DASHBOARD_FOLDER_UID,
-      };
+  return {
+    "grafana.app/folder": DASHBOARD_FOLDER_UID,
+  };
 }
 
 function testDataQuery(
