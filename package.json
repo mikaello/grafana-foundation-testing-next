@@ -4,11 +4,14 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "mkdir -p resources && node index.ts > resources/output.json",
-    "format": "biome format --write *.ts *.md *.jsonc .github/* resources/*.json; prettier --write *.md .github/*.md",
-    "lint": "biome lint --fix *.ts *.md *.jsonc .github/* resources/*.json",
-    "assist": "biome check --fix *.ts *.md .github/* resources/*.json",
-    "validate": "gcx resources validate",
+    "build": "node index.ts",
+    "format": "biome format --write *.ts *.md *.jsonc .github/*; prettier --write *.md .github/*.md",
+    "lint": "biome lint --fix *.ts *.md *.jsonc .github/*",
+    "assist": "biome check --fix *.ts *.md .github/*",
+    "validate": "gcx resources validate -p resources",
+    "validate:alerts": "gcx resources validate -p alerting-resources",
+    "dry-run": "gcx resources push --dry-run -p resources",
+    "dry-run:alerts": "gcx resources push --dry-run -p alerting-resources",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
