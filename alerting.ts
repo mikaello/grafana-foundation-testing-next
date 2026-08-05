@@ -1,14 +1,14 @@
 import * as alerting from "@grafana/grafana-foundation-sdk/alerting";
 import {
   ALERT_CONTACT_POINT,
+  ALERT_RULE_FOLDER_UID,
   EMAIL_CONTACT_POINT_ADDRESS,
   EMAIL_CONTACT_POINT_NAME,
-  FOLDER_UID,
   type JsonObject,
   TESTDATA_DATASOURCE_NAME,
   TESTDATA_DATASOURCE_UID,
 } from "./config.ts";
-import { manifest, rawBuilder } from "./resource-utils.ts";
+import { ALERT_PROJECT_LABEL, manifest, rawBuilder } from "./resource-utils.ts";
 
 const {
   ContactPointBuilder,
@@ -181,6 +181,7 @@ function alertRuleResource(
       for: severity === "critical" ? "1m" : "3m",
       keepFiringFor: "5m",
       labels: {
+        [ALERT_PROJECT_LABEL]: "true",
         managed_by: "gcx",
         severity,
         team: "platform",
@@ -197,7 +198,7 @@ function alertRuleResource(
       },
     },
     {
-      "grafana.app/folder": FOLDER_UID,
+      "grafana.app/folder": ALERT_RULE_FOLDER_UID,
     },
     {
       "grafana-as-code/example": "alert-rule",
@@ -309,12 +310,12 @@ function classicAlertRuleGroup() {
   });
 
   return new RuleGroupBuilder("grafana-as-code-classic")
-    .folderUid(FOLDER_UID)
+    .folderUid(ALERT_RULE_FOLDER_UID)
     .interval(60)
     .withRule(
       new RuleBuilder("[classic] Synthetic latency warning")
         .uid("gac-classic-latency-warning")
-        .folderUID(FOLDER_UID)
+        .folderUID(ALERT_RULE_FOLDER_UID)
         .ruleGroup("grafana-as-code-classic")
         .orgID(1)
         .condition("B")
@@ -324,6 +325,7 @@ function classicAlertRuleGroup() {
         .execErrState("KeepLast")
         .isPaused(true)
         .labels({
+          [ALERT_PROJECT_LABEL]: "true",
           managed_by: "gcx",
           severity: "warning",
           team: "platform",
